@@ -1,5 +1,9 @@
 # robot-car-slam
 
+An Ackermann-steering robot car running on a Raspberry Pi. It builds a 2D map with an RPLiDAR A1 and Cartographer (ROS 2 Jazzy), and you click a point on the map in Foxglove to send the car there. It drives forward or reverses depending on where the goal is, does multi-point turns in tight spots, and avoids obstacles using the LiDAR scan. An Arduino Mega 2560 handles the steering servo, drive motors and wheel encoders over USB serial. There's also a small web UI for manual driving and camera-based sign detection (Edge Impulse). The rest of this README is in Vietnamese.
+
+---
+
 Xe Ackermann chạy trên Raspberry Pi. Dùng RPLiDAR A1 với Cartographer để vẽ bản đồ, sau đó click một điểm trên map trong Foxglove là xe tự chạy tới đó (goal ở phía sau thì xe tự lùi). Ngoài ra có thêm trang web để điều khiển tay và nhận diện biển báo bằng camera.
 
 Pi nói chuyện với Arduino Mega 2560 qua cổng USB, 115200 baud. Mega lo servo lái, motor và encoder.
@@ -7,7 +11,7 @@ Pi nói chuyện với Arduino Mega 2560 qua cổng USB, 115200 baud. Mega lo se
 ## Có gì trong repo
 
 - `slam/`: chạy LiDAR, TF, Cartographer và Foxglove Bridge
-- `navigation/`: `goal_pose_drive_reverse_ppnew11.py` là bộ điều khiển chính (pure pursuit, lùi, quay đầu, né vật cản), `goto_clicked_point.py` đổi điểm click thành goal
+- `navigation/`: `goal_pose_drive.py` là bộ điều khiển chính (pure pursuit, lùi, quay đầu, né vật cản), `goto_clicked_point.py` đổi điểm click thành goal
 - `ai_control/`: web điều khiển + nhận diện biển báo bằng Edge Impulse
 - `firmware/`: code Arduino Mega, mỗi sketch một thư mục
 
@@ -17,7 +21,7 @@ ROS 2 Jazzy, mỗi dòng một terminal:
 
 ```
 ./slam/start_complete_slam_system.sh
-python3 navigation/goal_pose_drive_reverse_ppnew11.py
+python3 navigation/goal_pose_drive.py
 python3 navigation/goto_clicked_point.py
 ./ai_control/start_ai_robot_control.sh
 ```
@@ -35,7 +39,7 @@ Mega gửi lại `E,trái,phải,servo_us` (số xung encoder hai bánh và xung
 
 ## Số đo xe
 
-Lấy từ `goal_pose_drive_reverse_ppnew11.py`:
+Lấy từ `goal_pose_drive.py`:
 
 - chiều dài cơ sở 20 cm, thân xe rộng 20 cm
 - từ trục sau tới mũi xe 23 cm, tới đuôi 4 cm
