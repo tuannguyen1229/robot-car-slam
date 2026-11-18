@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+ei-venv/
+*.log
+*.swp
+.env
+.vscode/
+
+# Large or device-specific artifacts
+*.eim
+*.onnx
+*.tar.gz
